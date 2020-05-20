@@ -1,10 +1,16 @@
 module.exports = {
-  purge: [
-    "./src/**/*.html",
-    "./src/**/*.vue",
-    "./src/**/*.jsx",
-    "./src/**/*.js",
-  ],
+  purge: {
+    content: [
+      "./src/**/*.html",
+      "./src/**/*.vue",
+      "./src/**/*.tsx",
+      "./src/**/*.jsx",
+      "./src/**/*.js",
+    ],
+    options: {
+      defaultExtractor: (content) => content.match(/[\w-/.:]+(?<!:)/g) || [],
+    },
+  },
   theme: {
     extend: {
       fontFamily: {
@@ -14,5 +20,5 @@ module.exports = {
     },
   },
   variants: {},
-  plugins: [],
+  plugins: [require("@tailwindcss/ui")],
 };
