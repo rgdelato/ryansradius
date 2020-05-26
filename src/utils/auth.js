@@ -1,4 +1,5 @@
 import createAuth0Client from "@auth0/auth0-spa-js";
+// import { navigate } from "gatsby";
 
 let auth0;
 
@@ -18,7 +19,13 @@ export const isAuthenticated = async () => {
 };
 
 export const login = async () => {
-  await auth0.loginWithRedirect({ redirect_uri: process.env.AUTH0_CALLBACK });
+  try {
+    await auth0.loginWithRedirect({
+      redirect_uri: process.env.AUTH0_CALLBACK,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const getToken = async () => {

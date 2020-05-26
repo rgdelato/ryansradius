@@ -56,27 +56,16 @@ export default function ChatLayout(props) {
   }, []);
 
   if (!user) {
-    return (
-      <div className="min-h-screen flex justify-center items-center bg-gray-100">
-        <div className="text-2xl">Loading...</div>
-      </div>
-    );
+    return <Loading />;
   }
 
   if (error) {
-    return (
-      <div className="min-h-screen flex justify-center items-center bg-gray-100">
-        <div className="text-2xl">{error.message}</div>
-      </div>
-    );
+    return <Loading message={error ? error.message : "Error"} />;
   }
 
   return (
     <Layout>
-      <div
-        className="min-h-screen flex overflow-hidden bg-gray-100"
-        style={{ minHeight: "-webkit-fill-available" }}
-      >
+      <div className="flex flex-1 bg-gray-100">
         <Sidebar
           user={user}
           channels={data && data.channel}
@@ -86,7 +75,7 @@ export default function ChatLayout(props) {
           onCloseSidebar={handleCloseSidebar}
         />
 
-        <div className="max-h-screen flex flex-col w-0 flex-1 overflow-hidden">
+        <div className="flex flex-col flex-1">
           <ContentHeader
             channels={data && data.channel}
             loading={loading}
@@ -94,16 +83,18 @@ export default function ChatLayout(props) {
             onOpenSidebar={handleOpenSidebar}
           />
 
-          <main className="flex flex-row flex-1 relative z-0 overflow-hidden focus:outline-none">
+          <main className="flex flex-row flex-1 z-0 focus:outline-none">
             <div className="flex flex-col flex-auto">
               {loading ? (
                 <Loading />
               ) : (
                 <>
-                  <Content
-                    channels={data && data.channel}
-                    selectedChannel={selectedChannel}
-                  />
+                  <div className="relative flex-1">
+                    <Content
+                      channels={data && data.channel}
+                      selectedChannel={selectedChannel}
+                    />
+                  </div>
 
                   <ContentFooter
                     user={user}
@@ -121,10 +112,12 @@ export default function ChatLayout(props) {
   );
 }
 
-function Loading() {
+function Loading({ message }) {
   return (
-    <div className="flex justify-center items-center bg-gray-100">
-      <div className="text-2xl">Loading...</div>
-    </div>
+    <Layout>
+      <div className="flex-1 flex justify-center items-center bg-gray-100">
+        <div className="text-2xl">{message ? message : "Loading..."}</div>
+      </div>
+    </Layout>
   );
 }
