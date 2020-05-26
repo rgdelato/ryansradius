@@ -44,7 +44,7 @@ export default function ContentFooter({ user, selectedChannel }) {
   };
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 bg-gray-100">
+    <div className="flex-initial bg-gray-100">
       <form onSubmit={handleSubmit}>
         <div className="p-3 flex rounded-md shadow-sm">
           <div className="relative flex-grow focus-within:z-10">

@@ -1,12 +1,8 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
   purge: {
-    content: [
-      "./src/**/*.html",
-      "./src/**/*.vue",
-      "./src/**/*.tsx",
-      "./src/**/*.jsx",
-      "./src/**/*.js",
-    ],
+    content: ["./src/**/*.html", "./src/**/*.tsx", "./src/**/*.js"],
     options: {
       defaultExtractor: (content) => content.match(/[\w-/.:]+(?<!:)/g) || [],
     },
@@ -14,8 +10,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        display: ["Open Sans", "sans-serif"],
-        body: ["Merriweather", "Georgia", "serif"],
+        sans: ["Inter", ...defaultTheme.fontFamily.sans],
+        // display: ["Open Sans", "sans-serif"],
+        // body: ["Merriweather", "Georgia", "serif"],
       },
     },
   },

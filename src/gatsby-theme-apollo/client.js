@@ -8,7 +8,7 @@ import {
 import { getMainDefinition } from "@apollo/client/utilities";
 import { setContext } from "@apollo/link-context";
 import { WebSocketLink } from "@apollo/link-ws";
-import { /* getProfile, */ getTokens } from "../utils/auth";
+import { getToken } from "../utils/auth";
 
 const isBrowser = typeof window !== "undefined";
 
@@ -18,11 +18,11 @@ const wsLink = isBrowser
       options: {
         lazy: true,
         reconnect: true,
-        connectionParams: () => {
-          const tokens = getTokens();
+        connectionParams: async () => {
+          const token = await getToken();
           return {
             headers: {
-              Authorization: tokens.idToken ? `Bearer ${tokens.idToken}` : "",
+              Authorization: token ? `Bearer ${token}` : "",
             },
           };
         },
@@ -54,14 +54,14 @@ const link = isBrowser
     )
   : httpLink;
 
-const authLink = setContext((_, { headers }) => {
+const authLink = setContext(async (_, { headers }) => {
   // get the authentication token
-  const tokens = getTokens();
+  const token = await getToken();
   // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
-      Authorization: tokens.idToken ? `Bearer ${tokens.idToken}` : "",
+      Authorization: token ? `Bearer ${token}` : "",
     },
   };
 });

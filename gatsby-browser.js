@@ -4,34 +4,28 @@
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
 
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { navigate } from "gatsby";
 import { silentAuth } from "./src/utils/auth";
 
-class SessionCheck extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: true,
-    };
-  }
+function SilentAuth({ children }) {
+  const [loading, setLoading] = useState(true);
 
-  handleCheckSession = () => {
-    this.setState({ loading: false });
-  };
+  useEffect(() => {
+    silentAuth().then((auth0) => {
+      setLoading(false);
 
-  componentDidMount() {
-    silentAuth(this.handleCheckSession);
-  }
+      auth0.isAuthenticated().then((res) => {
+        if (res) {
+          navigate("/chat");
+        }
+      });
+    });
+  }, []);
 
-  render() {
-    return (
-      this.state.loading === false && (
-        <React.Fragment>{this.props.children}</React.Fragment>
-      )
-    );
-  }
+  return loading === false && <React.Fragment>{children}</React.Fragment>;
 }
 
 export const wrapRootElement = ({ element }) => {
-  return <SessionCheck>{element}</SessionCheck>;
+  return <SilentAuth>{element}</SilentAuth>;
 };

@@ -1,88 +1,38 @@
-import auth0 from "auth0-js";
-import { navigate } from "gatsby";
+import createAuth0Client from "@auth0/auth0-spa-js";
 
-const isBrowser = typeof window !== "undefined";
+let auth0;
 
-const auth = isBrowser
-  ? new auth0.WebAuth({
-      domain: process.env.AUTH0_DOMAIN,
-      clientID: process.env.AUTH0_CLIENTID,
-      redirectUri: process.env.AUTH0_CALLBACK,
-      responseType: "token id_token",
-      scope: "openid profile email",
-    })
-  : {};
+export const silentAuth = async () => {
+  auth0 = await createAuth0Client({
+    domain: process.env.AUTH0_DOMAIN,
+    client_id: process.env.AUTH0_CLIENTID,
+    redirect_uri: process.env.AUTH0_CALLBACK,
+    cacheLocation: "localstorage",
+  });
 
-const tokens = {
-  accessToken: false,
-  idToken: false,
-  expiresAt: false,
+  return auth0;
 };
 
-let user = {};
-
-export const isAuthenticated = () => {
-  if (!isBrowser) {
-    return;
-  }
-
-  return localStorage.getItem("isLoggedIn") === "true";
+export const isAuthenticated = async () => {
+  return await auth0.isAuthenticated();
 };
 
-export const login = () => {
-  if (!isBrowser) {
-    return;
-  }
-
-  auth.authorize();
+export const login = async () => {
+  await auth0.loginWithRedirect({ redirect_uri: process.env.AUTH0_CALLBACK });
 };
 
-const setSession = (cb = () => {}) => (err, authResult) => {
-  if (err) {
-    // console.log(err);
-    // localStorage.setItem("isLoggedIn", false);
-    navigate("/");
-    cb();
-    return;
-  }
-
-  if (authResult && authResult.accessToken && authResult.idToken) {
-    let expiresAt = authResult.expiresIn * 1000 + new Date().getTime();
-    tokens.accessToken = authResult.accessToken;
-    tokens.idToken = authResult.idToken;
-    tokens.expiresAt = expiresAt;
-    user = authResult.idTokenPayload;
-    localStorage.setItem("isLoggedIn", true);
-    navigate("/chat");
-    cb();
-  }
+export const getToken = async () => {
+  const claims = await auth0.getIdTokenClaims();
+  return claims.__raw;
 };
 
-export const silentAuth = (callback) => {
-  if (!isAuthenticated()) return callback();
-  auth.checkSession({}, setSession(callback));
-};
-
-export const handleAuthentication = () => {
-  if (!isBrowser) {
-    return;
-  }
-
-  auth.parseHash(setSession());
-};
-
-export const getTokens = () => {
-  return tokens;
-};
-
-export const getProfile = () => {
+export const getProfile = async () => {
+  const user = await auth0.getUser();
   return user;
 };
 
-export const logout = () => {
-  localStorage.setItem("isLoggedIn", false);
-  auth.logout({
+export const logout = async () => {
+  auth0.logout({
     returnTo: process.env.AUTH0_LOGOUT,
-    clientID: process.env.AUTH0_CLIENTID,
   });
 };

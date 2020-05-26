@@ -31,7 +31,7 @@ export default function Content({ selectedChannel }) {
   // console.log("MESSAGES_SUBSCRIPTION", { data, loading });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 sm:px-8 overflow-scroll">
+    <div className="flex-auto max-w-7xl py-2 px-4 sm:px-8 overflow-scroll">
       {/* Replace with your content */}
       <div className="py-4 space-y-2">
         {loading || !data ? null : (

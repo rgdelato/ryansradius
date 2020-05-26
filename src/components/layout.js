@@ -2,8 +2,9 @@
 // import { useStaticQuery, graphql } from "gatsby";
 
 // import Header from "./header";
-import "typeface-open-sans";
-import "typeface-merriweather";
+import "typeface-inter";
+// import "typeface-open-sans";
+// import "typeface-merriweather";
 import "./layout.css";
 
 const Layout = ({ children }) => {

@@ -95,14 +95,7 @@ export default function Sidebar({
                           {user.name}
                         </p>
                         <p className="text-sm leading-5 font-medium text-gray-400 group-hover:text-gray-300 transition ease-in-out duration-150">
-                          <button
-                            onClick={(e) => {
-                              e.preventDefault();
-                              logout();
-                            }}
-                          >
-                            Sign out
-                          </button>
+                          <button onClick={logout}>Sign out</button>
                         </p>
                       </div>
                     </div>
@@ -123,6 +116,7 @@ export default function Sidebar({
                                 ? "text-white bg-gray-900"
                                 : "text-gray-300 hover:text-white hover:bg-gray-700 focus:text-white"
                             }`}
+                            onClick={onCloseSidebar}
                           >
                             <HashtagSVG
                               className={`mr-4 h-6 w-6 ${
@@ -198,6 +192,7 @@ export default function Sidebar({
                           ? "text-white bg-gray-900"
                           : "text-gray-300 hover:text-white hover:bg-gray-700 focus:text-white"
                       }`}
+                      onClick={onCloseSidebar}
                     >
                       <HashtagSVG
                         className={`mr-3 h-6 w-6 group-hover:text-gray-300 group-focus:text-gray-300 transition ease-in-out duration-150 ${
