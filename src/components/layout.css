@@ -37,9 +37,10 @@ h2 {
 h3 {
   @apply text-lg;
 }
-/* a {
-  @apply text-blue-600 underline;
-} */
+
+#Content a {
+  @apply text-teal-600 underline;
+}
 
 @tailwind components;
 

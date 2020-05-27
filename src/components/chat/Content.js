@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { gql, useSubscription } from "@apollo/client";
+import ReactMarkdown from "react-markdown";
 import isSameDay from "date-fns/isSameDay";
 import isSameMinute from "date-fns/isSameMinute";
 import formatDate from "date-fns/format";
@@ -39,7 +40,10 @@ export default function Content({ selectedChannel }) {
   }
 
   return (
-    <ChatScroller className="absolute inset-0 overflow-scroll max-w-7xl pt-2 px-4 sm:px-8">
+    <ChatScroller
+      id="Content"
+      className="absolute inset-0 overflow-scroll max-w-7xl pt-2 px-4 sm:px-8"
+    >
       {/* Replace with your content */}
       <div className="py-4 space-y-2">
         <>
@@ -93,7 +97,13 @@ export default function Content({ selectedChannel }) {
                         {formatDate(new Date(message.created_at), "h:mm a")}
                       </p>
                       <p className="text-sm leading-5 font-medium text-gray-900">
-                        {message.message}
+                        <ReactMarkdown
+                          source={message.message}
+                          linkTarget="_blank"
+                          renderers={{
+                            paragraph: (props) => <React.Fragment {...props} />,
+                          }}
+                        />
                       </p>
                     </div>
                   </div>
@@ -101,7 +111,13 @@ export default function Content({ selectedChannel }) {
                   <div className="flex items-center">
                     <div className="ml-12">
                       <p className="text-sm leading-5 font-medium text-gray-900">
-                        {message.message}
+                        <ReactMarkdown
+                          source={message.message}
+                          linkTarget="_blank"
+                          renderers={{
+                            paragraph: (props) => <React.Fragment {...props} />,
+                          }}
+                        />
                       </p>
                     </div>
                   </div>
