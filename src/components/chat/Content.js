@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { gql, useSubscription } from "@apollo/client";
 import isSameDay from "date-fns/isSameDay";
 import isSameMinute from "date-fns/isSameMinute";
@@ -31,7 +31,7 @@ export default function Content({ selectedChannel }) {
   // console.log("MESSAGES_SUBSCRIPTION", { data, loading });
 
   return (
-    <div className="absolute inset-0 overflow-scroll max-w-7xl pt-2 px-4 sm:px-8">
+    <ChatScroller className="absolute inset-0 overflow-scroll max-w-7xl pt-2 px-4 sm:px-8">
       {/* Replace with your content */}
       <div className="py-4 space-y-2">
         {loading || !data ? null : (
@@ -106,6 +106,27 @@ export default function Content({ selectedChannel }) {
         )}
       </div>
       {/* /End replace */}
-    </div>
+    </ChatScroller>
   );
+}
+
+function ChatScroller(props) {
+  const ref = useRef();
+  const shouldScrollRef = useRef(true);
+
+  useEffect(() => {
+    if (shouldScrollRef.current) {
+      const node = ref.current;
+      node.scrollTop = node.scrollHeight;
+    }
+  });
+
+  const handleScroll = () => {
+    const node = ref.current;
+    const { scrollTop, clientHeight, scrollHeight } = node;
+    const atBottom = scrollHeight <= clientHeight + scrollTop + 48;
+    shouldScrollRef.current = atBottom;
+  };
+
+  return <div {...props} ref={ref} onScroll={handleScroll} />;
 }
