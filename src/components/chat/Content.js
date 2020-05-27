@@ -30,80 +30,86 @@ export default function Content({ selectedChannel }) {
 
   // console.log("MESSAGES_SUBSCRIPTION", { data, loading });
 
+  if (loading || !data) {
+    return (
+      <div className="absolute inset-0 overflow-scroll max-w-7xl pt-2 px-4 sm:px-8 flex justify-center items-center">
+        <div className="text-xl text-gray-400">Loading...</div>
+      </div>
+    );
+  }
+
   return (
     <ChatScroller className="absolute inset-0 overflow-scroll max-w-7xl pt-2 px-4 sm:px-8">
       {/* Replace with your content */}
       <div className="py-4 space-y-2">
-        {loading || !data ? null : (
-          <>
-            {data.messages.map((message, i) => {
-              const previousMessage = data.messages[i - 1];
-              const firstOfTheDay =
-                !previousMessage ||
-                !isSameDay(
-                  new Date(previousMessage.created_at),
-                  new Date(message.created_at)
-                );
-              const postedThisYear = true;
-              const firstOfTheMinute =
-                !previousMessage ||
-                !isSameMinute(
-                  new Date(previousMessage.created_at),
-                  new Date(message.created_at)
-                );
-              const isDifferentUser =
-                !previousMessage || previousMessage.user.id !== message.user.id;
+        <>
+          {data.messages.map((message, i) => {
+            const previousMessage = data.messages[i - 1];
+            const firstOfTheDay =
+              !previousMessage ||
+              !isSameDay(
+                new Date(previousMessage.created_at),
+                new Date(message.created_at)
+              );
+            const postedThisYear = true;
+            const firstOfTheMinute =
+              !previousMessage ||
+              !isSameMinute(
+                new Date(previousMessage.created_at),
+                new Date(message.created_at)
+              );
+            const isDifferentUser =
+              !previousMessage || previousMessage.user.id !== message.user.id;
 
-              return (
-                <React.Fragment key={message.id}>
-                  {firstOfTheDay ? (
-                    <div className="py-3">
-                      <div className="relative border-t-2">
-                        <div className="absolute inset-0 text-center">
-                          <div className="inline-block transform -translate-y-1/2 p-2 text-xs leading-5 text-gray-400 font-semibold uppercase bg-gray-100">
-                            {formatDate(
-                              new Date(message.created_at),
-                              postedThisYear ? "MMM d" : "MMM d, yyyy"
-                            )}
-                          </div>
+            return (
+              <React.Fragment key={message.id}>
+                {firstOfTheDay ? (
+                  <div className="py-3">
+                    <div className="relative border-t-2">
+                      <div className="absolute inset-0 text-center">
+                        <div className="inline-block transform -translate-y-1/2 p-2 text-xs leading-5 text-gray-400 font-semibold uppercase bg-gray-100">
+                          {formatDate(
+                            new Date(message.created_at),
+                            postedThisYear ? "MMM d" : "MMM d, yyyy"
+                          )}
                         </div>
                       </div>
                     </div>
-                  ) : null}
+                  </div>
+                ) : null}
 
-                  {firstOfTheMinute || isDifferentUser ? (
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0">
-                        <img
-                          className="inline-block h-9 w-9 rounded-md bg-gray-200 shadow-inner"
-                          src={message.user.picture}
-                          alt=""
-                        />
-                      </div>
-                      <div className="ml-3">
-                        <p className="text-xs leading-5 font-medium text-gray-400">
-                          {message.user.name} •{" "}
-                          {formatDate(new Date(message.created_at), "h:mm a")}
-                        </p>
-                        <p className="text-sm leading-5 font-medium text-gray-900">
-                          {message.message}
-                        </p>
-                      </div>
+                {firstOfTheMinute || isDifferentUser ? (
+                  <div className="flex items-center">
+                    <div className="flex-shrink-0">
+                      <img
+                        className="inline-block h-9 w-9 rounded-md bg-gray-200 shadow-inner"
+                        src={message.user.picture}
+                        alt=""
+                      />
                     </div>
-                  ) : (
-                    <div className="flex items-center">
-                      <div className="ml-12">
-                        <p className="text-sm leading-5 font-medium text-gray-900">
-                          {message.message}
-                        </p>
-                      </div>
+                    <div className="ml-3">
+                      <p className="text-xs leading-5 font-medium text-gray-400">
+                        {message.user.name} •{" "}
+                        {formatDate(new Date(message.created_at), "h:mm a")}
+                      </p>
+                      <p className="text-sm leading-5 font-medium text-gray-900">
+                        {message.message}
+                      </p>
                     </div>
-                  )}
-                </React.Fragment>
-              );
-            })}
-          </>
-        )}
+                  </div>
+                ) : (
+                  <div className="flex items-center">
+                    <div className="ml-12">
+                      <p className="text-sm leading-5 font-medium text-gray-900">
+                        {message.message}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </React.Fragment>
+            );
+          })}
+        </>
       </div>
       {/* /End replace */}
     </ChatScroller>
