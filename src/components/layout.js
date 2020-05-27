@@ -1,4 +1,5 @@
-// import React from "react";
+import { useEffect } from "react";
+import debounce from "lodash/debounce";
 // import { useStaticQuery, graphql } from "gatsby";
 
 // import Header from "./header";
@@ -17,6 +18,23 @@ const Layout = ({ children }) => {
   //     }
   //   }
   // `);
+
+  useEffect(() => {
+    const mobile100vhHack = debounce(() => {
+      document.documentElement.style.setProperty(
+        "--vh100",
+        `${window.innerHeight}px`
+      );
+    }, 75);
+
+    mobile100vhHack();
+
+    window.addEventListener("resize", mobile100vhHack);
+
+    return () => {
+      window.removeEventListener("resize", mobile100vhHack);
+    };
+  }, []);
 
   return children;
 

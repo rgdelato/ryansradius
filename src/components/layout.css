@@ -2,6 +2,8 @@
 
 html {
   /* height: -webkit-fill-available; */
+  height: calc(var(--vh100, 100vh));
+  transition: height 0.15s ease-in-out;
 }
 
 body {
@@ -9,11 +11,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   /* min-height: -webkit-fill-available; */
+  min-height: calc(var(--vh100, 100vh));
   font-size: 18px;
   text-rendering: optimizeLegibility;
   @apply bg-gray-100;
   display: flex;
   flex-direction: column;
+  transition: min-height 0.15s ease-in-out;
 }
 
 #___gatsby {
