@@ -16,20 +16,20 @@ export default function MemberList() {
 
   if (loading || !data || error) {
     return (
-      <div className="flex-shrink-0 hidden lg:block w-48 border-l bg-gray-200 px-2 sm:px-3 sm:px-4 pt-1 pb-3 sm:py-3 text-sm text-gray-700 shadow-inner"></div>
+      <div className="flex-shrink-0 hidden w-48 px-2 pt-1 pb-3 text-sm text-gray-700 bg-gray-200 border-l shadow-inner lg:block sm:px-3 sm:px-4 sm:py-3"></div>
     );
   }
 
   return (
-    <div className="flex-shrink-0 hidden lg:block w-48 border-l bg-gray-200 px-2 sm:px-3 sm:px-4 pt-1 pb-3 sm:py-3 text-sm text-gray-700 shadow-inner">
-      <div className="text-xs leading-5 text-gray-400 font-semibold uppercase">
+    <div className="flex-shrink-0 hidden w-48 px-2 pt-1 pb-3 text-sm text-gray-700 bg-gray-200 border-l shadow-inner lg:block sm:px-3 sm:px-4 sm:py-3">
+      <div className="text-xs font-semibold leading-5 text-gray-400 uppercase">
         Online–0
       </div>
 
-      {data.users.map((user) => (
-        <div key={user.id} className="flex items-center">
-          <div className="flex-none h-2 w-2 rounded-full text-gray-200 shadow-solid bg-gray-400"></div>
-          <div className="flex-auto ml-2 truncate">{user.name}</div>
+      {data.users.map(({ id, name }) => (
+        <div key={id} className="flex items-center">
+          <div className="flex-none w-2 h-2 text-gray-200 bg-gray-400 rounded-full shadow-solid"></div>
+          <div className="flex-auto ml-2 truncate">{name}</div>
         </div>
       ))}
     </div>

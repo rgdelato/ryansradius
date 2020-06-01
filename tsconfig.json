@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "jsx": "react",
+    "allowJs": true,
+    "checkJs": true,
+    "esModuleInterop": true
+  },
+  "include": ["src/**/*", "tests/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}

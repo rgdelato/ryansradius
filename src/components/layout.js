@@ -41,9 +41,9 @@ const Layout = ({ children }) => {
   // return (
   //   <>
   //     <Header siteTitle={data.site.siteMetadata.title} />
-  //     <div className="container mx-auto my-0 px-4 pb-6">
-  //       <main className="font-body text-gray-800">{children}</main>
-  //       <footer className="container mx-auto font-display mt-6">
+  //     <div className="container px-4 pb-6 mx-auto my-0">
+  //       <main className="text-gray-800 font-body">{children}</main>
+  //       <footer className="container mx-auto mt-6 font-display">
   //         © {new Date().getFullYear()}, Built with
   //         {` `}
   //         <a href="https://www.gatsbyjs.org">Gatsby</a>

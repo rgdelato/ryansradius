@@ -17,7 +17,7 @@ export default function Sidebar({
       {/* Off-canvas menu for mobile */}
       <Transition show={isOpen}>
         <div className="sm:hidden">
-          <div className="fixed inset-0 flex z-40">
+          <div className="fixed inset-0 z-40 flex">
             {/*
               Off-canvas menu overlay, show/hide based on off-canvas menu state.
 
@@ -58,15 +58,15 @@ export default function Sidebar({
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full"
             >
-              <div className="relative flex-1 flex flex-col max-w-xs w-full bg-gray-800">
-                <div className="absolute top-0 right-0 -mr-14 p-1">
+              <div className="relative flex flex-col flex-1 w-full max-w-xs bg-gray-800">
+                <div className="absolute top-0 right-0 p-1 -mr-14">
                   <button
-                    className="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600"
+                    className="flex items-center justify-center w-12 h-12 rounded-full focus:outline-none focus:bg-gray-600"
                     aria-label="Close sidebar"
                     onClick={onCloseSidebar}
                   >
                     <svg
-                      className="h-6 w-6 text-white"
+                      className="w-6 h-6 text-white"
                       stroke="currentColor"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -80,21 +80,21 @@ export default function Sidebar({
                     </svg>
                   </button>
                 </div>
-                <div className="flex-shrink-0 flex bg-gray-700 p-4">
-                  <div className="flex-shrink-0 group block">
+                <div className="flex flex-shrink-0 p-4 bg-gray-700">
+                  <div className="flex-shrink-0 block group">
                     <div className="flex items-center">
                       <div className="relative">
                         <img
-                          className="inline-block h-10 w-10 rounded-md bg-gray-200 shadow-inner"
+                          className="inline-block w-10 h-10 bg-gray-200 rounded-md shadow-inner"
                           src={user.picture}
                           alt=""
                         />
                       </div>
                       <div className="ml-3">
-                        <p className="text-base leading-6 font-medium text-white">
+                        <p className="text-base font-medium leading-6 text-white">
                           {user.name}
                         </p>
-                        <p className="text-sm leading-5 font-medium text-gray-400 group-hover:text-gray-300 transition ease-in-out duration-150">
+                        <p className="text-sm font-medium leading-5 text-gray-400 transition duration-150 ease-in-out group-hover:text-gray-300">
                           <button onClick={logout}>Sign out</button>
                         </p>
                       </div>
@@ -102,7 +102,7 @@ export default function Sidebar({
                   </div>
                 </div>
                 <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
-                  <nav className="mb-5 px-2">
+                  <nav className="px-2 mb-5">
                     {loading ? null : (
                       <>
                         {channels.map((channel, i) => (
@@ -147,21 +147,21 @@ export default function Sidebar({
       {/* Static sidebar for desktop */}
       <div className="hidden sm:flex sm:flex-shrink-0">
         <div className="flex flex-col w-64 bg-gray-800">
-          <div className="flex-shrink-0 flex bg-gray-700 p-4">
-            <div className="flex-shrink-0 w-full group block">
+          <div className="flex flex-shrink-0 p-4 bg-gray-700">
+            <div className="flex-shrink-0 block w-full group">
               <div className="flex items-center">
                 <div className="relative">
                   <img
-                    className="inline-block h-9 w-9 rounded-md bg-gray-200 shadow-inner"
+                    className="inline-block bg-gray-200 rounded-md shadow-inner h-9 w-9"
                     src={user.picture}
                     alt=""
                   />
                 </div>
                 <div className="ml-3">
-                  <p className="text-sm leading-5 font-medium text-white">
+                  <p className="text-sm font-medium leading-5 text-white">
                     {user.name}
                   </p>
-                  <p className="text-xs leading-4 font-medium text-gray-300 group-hover:text-gray-200 transition ease-in-out duration-150">
+                  <p className="text-xs font-medium leading-4 text-gray-300 transition duration-150 ease-in-out group-hover:text-gray-200">
                     <button
                       onClick={(e) => {
                         e.preventDefault();
@@ -176,9 +176,9 @@ export default function Sidebar({
             </div>
           </div>
 
-          <div className="h-0 flex-1 flex flex-col pt-4 pb-5 overflow-y-auto">
+          <div className="flex flex-col flex-1 h-0 pt-4 pb-5 overflow-y-auto">
             {/* Sidebar component, swap this element with another sidebar if you like */}
-            <nav className="mb-5 flex-1 px-2 bg-gray-800">
+            <nav className="flex-1 px-2 mb-5 bg-gray-800">
               {loading ? null : (
                 <>
                   {channels.map((channel, i) => (

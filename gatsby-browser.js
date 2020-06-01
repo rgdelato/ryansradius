@@ -6,7 +6,6 @@
 
 import React, { useState, useEffect } from "react";
 import { navigate } from "gatsby";
-import { parse as parseQueryString } from "query-string";
 import { silentAuth } from "./src/utils/auth";
 
 function SilentAuth({ children }) {
@@ -18,11 +17,7 @@ function SilentAuth({ children }) {
 
       auth0.isAuthenticated().then((res) => {
         if (res) {
-          const { channel = null } = parseQueryString(
-            window.location && window.location.search
-          );
-
-          navigate(`/chat/${channel ? `?channel=${channel}` : ""}`);
+          navigate(`/chat/${window.location.search}`);
         }
       });
     });

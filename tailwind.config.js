@@ -3,9 +3,9 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 module.exports = {
   purge: {
     content: ["./src/**/*.html", "./src/**/*.tsx", "./src/**/*.js"],
-    options: {
-      defaultExtractor: (content) => content.match(/[\w-/.:]+(?<!:)/g) || [],
-    },
+    // options: {
+    //   defaultExtractor: (content) => content.match(/[\w-/.:]+(?<!:)/g) || [],
+    // },
   },
   theme: {
     extend: {

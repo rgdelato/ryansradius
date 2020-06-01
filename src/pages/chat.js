@@ -21,7 +21,7 @@ const GET_CHANNELS = gql`
   }
 `;
 
-export default function ChatLayout(props) {
+export default function ChatLayout({ location }) {
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const handleOpenSidebar = () => setSidebarIsOpen(true);
   const handleCloseSidebar = () => setSidebarIsOpen(false);
@@ -37,13 +37,11 @@ export default function ChatLayout(props) {
   const { loading, error, data } = useQuery(GET_CHANNELS);
   // console.log("GET_CHANNELS", { loading, error, data });
 
-  const { channel = null } = parseQueryString(
-    props.location && props.location.search
-  );
+  const { channel = null } = parseQueryString(location?.search);
 
   const selectedChannel =
     channel && data
-      ? data.channel.find((item) => item.name === channel) || data.channel[0]
+      ? data.channel.find(({ name }) => name === channel) ?? data.channel[0]
       : data
       ? data.channel[0]
       : null;
@@ -61,7 +59,7 @@ export default function ChatLayout(props) {
   }
 
   if (error) {
-    return <Loading message={error ? error.message : "Error"} />;
+    return <Loading message={error?.message ?? "Error"} />;
   }
 
   return (
@@ -74,7 +72,7 @@ export default function ChatLayout(props) {
         <div className="flex flex-1 bg-gray-100">
           <Sidebar
             user={user}
-            channels={data && data.channel}
+            channels={data?.channel}
             selectedChannel={selectedChannel}
             loading={loading}
             isOpen={sidebarIsOpen}
@@ -83,23 +81,18 @@ export default function ChatLayout(props) {
 
           <div className="flex flex-col flex-1">
             <ContentHeader
-              channels={data && data.channel}
-              loading={loading}
               selectedChannel={selectedChannel}
               onOpenSidebar={handleOpenSidebar}
             />
 
-            <main className="flex flex-row flex-1 z-0 focus:outline-none">
+            <main className="z-0 flex flex-row flex-1 focus:outline-none">
               <div className="flex flex-col flex-auto">
                 {loading ? (
                   <Loading />
                 ) : (
                   <>
                     <div className="relative flex-1">
-                      <Content
-                        channels={data && data.channel}
-                        selectedChannel={selectedChannel}
-                      />
+                      <Content selectedChannel={selectedChannel} />
                     </div>
 
                     <ContentFooter
@@ -119,13 +112,11 @@ export default function ChatLayout(props) {
   );
 }
 
-function Loading({ message }) {
+function Loading({ message = null }) {
   return (
     <Layout>
-      <div className="flex-1 flex justify-center items-center">
-        <div className="text-xl text-gray-400">
-          {message ? message : "Loading..."}
-        </div>
+      <div className="flex items-center justify-center flex-1">
+        <div className="text-xl text-gray-400">{message ?? "Loading..."}</div>
       </div>
     </Layout>
   );

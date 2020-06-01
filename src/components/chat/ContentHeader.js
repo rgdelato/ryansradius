@@ -2,14 +2,14 @@ import React from "react";
 
 export default function ContentHeader({ selectedChannel, onOpenSidebar }) {
   return (
-    <div className="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
+    <div className="relative z-10 flex flex-shrink-0 h-16 bg-white shadow">
       <button
-        className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 sm:hidden"
+        className="px-4 text-gray-500 border-r border-gray-200 focus:outline-none focus:bg-gray-100 focus:text-gray-600 sm:hidden"
         aria-label="Open sidebar"
         onClick={onOpenSidebar}
       >
         <svg
-          className="h-6 w-6"
+          className="w-6 h-6"
           stroke="currentColor"
           fill="none"
           viewBox="0 0 24 24"
@@ -22,9 +22,9 @@ export default function ContentHeader({ selectedChannel, onOpenSidebar }) {
           />
         </svg>
       </button>
-      <div className="flex-1 px-4 flex justify-between">
-        <div className="flex-1 flex">
-          <div className="w-full flex sm:ml-0">
+      <div className="flex justify-between flex-1 px-4">
+        <div className="flex flex-1">
+          <div className="flex w-full sm:ml-0">
             <div className="relative w-full text-sm text-gray-400 truncate focus-within:text-gray-600">
               <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none">
                 {selectedChannel && selectedChannel.topic ? (
@@ -34,14 +34,14 @@ export default function ContentHeader({ selectedChannel, onOpenSidebar }) {
                   </>
                 ) : null}
               </div>
-              {/* <div className="block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm">
+              {/* <div className="block w-full h-full py-2 pl-8 pr-3 text-gray-900 placeholder-gray-500 rounded-md focus:outline-none focus:placeholder-gray-400 sm:text-sm">
                 ???
               </div> */}
             </div>
           </div>
         </div>
-        <div className="ml-4 flex items-center sm:ml-6">
-          <div className="text-sm leading-5 font-medium text-gray-500">
+        <div className="flex items-center ml-4 sm:ml-6">
+          <div className="text-sm font-medium leading-5 text-gray-500">
             {selectedChannel ? <>#{selectedChannel.name}</> : null}
           </div>
         </div>

@@ -22,11 +22,11 @@ const ADD_MESSAGE = gql`
 `;
 
 export default function ContentFooter({ user, selectedChannel }) {
-  const inputRef = useRef();
+  const inputRef = useRef(null);
   const [addMessage /* , { data } */] = useMutation(ADD_MESSAGE);
 
   const handleSubmit = (e) => {
-    const messageText = inputRef.current.value;
+    const messageText = inputRef?.current?.value;
 
     e.preventDefault();
 
@@ -46,18 +46,18 @@ export default function ContentFooter({ user, selectedChannel }) {
   return (
     <div className="flex-initial bg-gray-100">
       <form onSubmit={handleSubmit}>
-        <div className="p-3 flex rounded-md shadow-sm">
+        <div className="flex p-3 rounded-md shadow-sm">
           <div className="relative flex-grow focus-within:z-10">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <ChatSVG className="h-5 w-5 text-gray-400" fill="currentColor" />
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <ChatSVG className="w-5 h-5 text-gray-400" fill="currentColor" />
             </div>
             <input
               ref={inputRef}
-              className="form-input block w-full rounded-none rounded-l-md pl-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+              className="block w-full pl-10 transition duration-150 ease-in-out rounded-none form-input rounded-l-md sm:text-sm sm:leading-5"
               placeholder={`Message #${selectedChannel.name}`}
             />
           </div>
-          <button className="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-r-md text-gray-700 bg-gray-50 hover:text-gray-500 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+          <button className="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium leading-5 text-gray-700 transition duration-150 ease-in-out border border-gray-300 rounded-r-md bg-gray-50 hover:text-gray-500 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700">
             <span>Submit</span>
           </button>
         </div>

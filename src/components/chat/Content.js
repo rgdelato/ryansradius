@@ -33,7 +33,7 @@ export default function Content({ selectedChannel }) {
 
   if (loading || !data) {
     return (
-      <div className="absolute inset-0 overflow-scroll max-w-7xl pt-2 px-4 sm:px-8 flex justify-center items-center">
+      <div className="absolute inset-0 flex items-center justify-center px-4 pt-2 overflow-scroll max-w-7xl sm:px-8">
         <div className="text-xl text-gray-400">Loading...</div>
       </div>
     );
@@ -42,7 +42,7 @@ export default function Content({ selectedChannel }) {
   return (
     <ChatScroller
       id="Content"
-      className="absolute inset-0 overflow-scroll max-w-7xl pt-2 px-4 sm:px-8"
+      className="absolute inset-0 px-4 pt-2 overflow-scroll max-w-7xl sm:px-8"
     >
       {/* Replace with your content */}
       <div className="py-4 space-y-2">
@@ -71,7 +71,7 @@ export default function Content({ selectedChannel }) {
                   <div className="py-3">
                     <div className="relative border-t-2">
                       <div className="absolute inset-0 text-center">
-                        <div className="inline-block transform -translate-y-1/2 p-2 text-xs leading-5 text-gray-400 font-semibold uppercase bg-gray-100">
+                        <div className="inline-block p-2 text-xs font-semibold leading-5 text-gray-400 uppercase transform -translate-y-1/2 bg-gray-100">
                           {formatDate(
                             new Date(message.created_at),
                             postedThisYear ? "MMM d" : "MMM d, yyyy"
@@ -86,17 +86,17 @@ export default function Content({ selectedChannel }) {
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
                       <img
-                        className="inline-block h-9 w-9 rounded-md bg-gray-200 shadow-inner"
+                        className="inline-block bg-gray-200 rounded-md shadow-inner h-9 w-9"
                         src={message.user.picture}
                         alt=""
                       />
                     </div>
                     <div className="ml-3">
-                      <p className="text-xs leading-5 font-medium text-gray-400">
+                      <p className="text-xs font-medium leading-5 text-gray-400">
                         {message.user.name} •{" "}
                         {formatDate(new Date(message.created_at), "h:mm a")}
                       </p>
-                      <p className="text-sm leading-5 font-medium text-gray-900">
+                      <p className="text-sm font-medium leading-5 text-gray-900">
                         <ReactMarkdown
                           source={message.message}
                           linkTarget="_blank"
@@ -110,7 +110,7 @@ export default function Content({ selectedChannel }) {
                 ) : (
                   <div className="flex items-center">
                     <div className="ml-12">
-                      <p className="text-sm leading-5 font-medium text-gray-900">
+                      <p className="text-sm font-medium leading-5 text-gray-900">
                         <ReactMarkdown
                           source={message.message}
                           linkTarget="_blank"
